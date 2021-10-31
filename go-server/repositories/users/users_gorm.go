@@ -49,3 +49,15 @@ func (r UsersGorm) GetUserByUserName(userName string, ctx *gin.Context) (entitie
 	}
 	return user, nil
 }
+
+func (r UsersGorm) GetUserList(ctx *gin.Context) ([]entities.Users, error) {
+	dbx, _ := ctx.Get("DB")
+	db := dbx.(*gorm.DB)
+	var users []entities.Users
+	rows, err := db.Find(&users).Rows()
+	if err != nil {
+		return users, err
+	}
+	defer rows.Close()
+	return users, nil
+}

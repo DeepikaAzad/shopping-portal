@@ -8,4 +8,5 @@ import (
 
 type ItemsInterface interface {
 	AddItem(models.AddItemReq, *gin.Context) (entities.Items, error)
+	ItemList(*gin.Context) ([]entities.Items, error)
 }

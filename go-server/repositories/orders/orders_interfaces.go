@@ -7,4 +7,5 @@ import (
 
 type OrdersGormInterface interface {
 	CreateOrder(entities.Orders, *gin.Context) (entities.Orders, error)
+	OrderList(uint, *gin.Context) ([]entities.ItemOrder, error)
 }

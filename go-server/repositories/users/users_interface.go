@@ -9,4 +9,5 @@ type UsersGormInterface interface {
 	CreateUser(entities.Users, *gin.Context) (entities.Users, error)
 	UpdateUser(entities.Users, string, *gin.Context) (entities.Users, error)
 	GetUserByUserName(string, *gin.Context) (entities.Users, error)
+	GetUserList(*gin.Context) ([]entities.Users, error)
 }

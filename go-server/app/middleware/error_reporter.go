@@ -62,7 +62,7 @@ func getHTTPstatusCode(message string) int {
 	if message == constants.ErrorCode.INTERNAL_SERVER_ERROR {
 		return http.StatusInternalServerError
 	}
-	if message == constants.ErrorCode.INVALID_PASSWORD {
+	if message == constants.ErrorCode.INVALID_USER {
 		return http.StatusUnauthorized
 	}
 	if message == constants.ErrorCode.INVALID_TOKEN {

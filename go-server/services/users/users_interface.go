@@ -9,4 +9,5 @@ import (
 type UsersInterface interface {
 	RegisterUser(models.RegisterUserReq, *gin.Context) (entities.Users, error)
 	LoginUser(models.LoginUserReq, *gin.Context) (entities.Users, error)
+	GetUserList(*gin.Context) ([]entities.Users, error)
 }

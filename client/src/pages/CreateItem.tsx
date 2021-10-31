@@ -2,18 +2,48 @@ import React, {SyntheticEvent, useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 const CreateItem = () => {
+    const [submitting, setSubmitting] = useState(false);
     const [itemName, setItemName] = useState('');
     const [redirect, setRedirect] = useState(false);
 
     const submit = async (e: SyntheticEvent) => {
         e.preventDefault();
+        setSubmitting(true);
 
-        await axios.post(process.env.REACT_APP_BACKEND_URL + '/api/item/create', {
+        axios.post(process.env.REACT_APP_BACKEND_URL + '/api/item/create', {
             name: itemName
-        }, { headers: { 'Content-Type': 'application/json' } });
-
-        setRedirect(true);
+        }).then((_) => {
+            toast.success('Item created successfully', {
+                position: "bottom-right",
+                autoClose: 750,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setSubmitting(false);
+            setTimeout(() => {
+                setRedirect(true);
+            }, 850)
+        }).catch((error) => {
+            console.log(error);
+            setSubmitting(false);
+            toast.error('Item creation failed', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        });
     }
 
     if (redirect) {
@@ -28,7 +58,20 @@ const CreateItem = () => {
                    onChange={e => setItemName(e.target.value)}
             /><br/>
 
-            <button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+            <button className="w-100 btn btn-lg btn-primary" type="submit">
+                {submitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                Submit
+            </button>
+            <ToastContainer
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </form>
     );
 };

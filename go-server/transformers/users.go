@@ -16,3 +16,18 @@ func GetLoginUserResponse(token string) models.LoginUserResp {
 		Token: token,
 	}
 }
+
+func GetUserListResponse(users []entities.Users) models.UserList {
+	userList := []models.User{}
+	for _, v := range users {
+		user := models.User{
+			ID:       v.ID,
+			UserName: v.UserName,
+			FullName: v.Name,
+		}
+		userList = append(userList, user)
+	}
+	return models.UserList{
+		User: userList,
+	}
+}

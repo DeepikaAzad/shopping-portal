@@ -11,37 +11,12 @@ import CreateItem from "./pages/CreateItem";
 
 import { parseJwt } from "./util"
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL || "";
-
-axios.interceptors.request.use(
-    config => {
-        const { origin } = new URL(config.url || "");
-        const allowedOrigins = [backendUrl];
-        const token = localStorage.getItem('token');
-        if (allowedOrigins.includes(origin)) {
-            if (config.headers) {
-                config.headers.authorization = `Bearer${token}`;
-            }
-        }
-        return config;
-    },
-    error => {
-        return Promise.reject(error);
-    }
-);
-
 function App() {
     const [name, setName] = useState('');
 
     useEffect(() => {
         (
             async () => {
-                // const response = await fetch(process.env.REACT_APP_BACKEND_URL + '/api/user/login', {
-                //     headers: { 'Content-Type': 'application/json' },
-                //     credentials: 'include',
-                // });
-
-                // const content = await response.json();
                 const storedJwt = localStorage.getItem('token');
                 if (storedJwt) {
                     const userInfo = parseJwt(storedJwt);

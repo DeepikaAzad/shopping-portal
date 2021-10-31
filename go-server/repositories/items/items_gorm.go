@@ -3,6 +3,7 @@ package items
 import (
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models/entities"
 	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -39,4 +40,18 @@ func (r ItemsGorm) GetItemByName(name string, ctx *gin.Context) (entities.Items,
 		return item, err
 	}
 	return item, nil
+}
+
+func (r ItemsGorm) GetItemsByIds(names []uint, ctx *gin.Context) ([]entities.Items, error) {
+	dbx, _ := ctx.Get("DB")
+	db := dbx.(*gorm.DB)
+	var items []entities.Items
+	rows, err := db.Where("id IN (?)", names).
+		Select("name", "id").
+		Find(&items).Rows()
+	if err != nil {
+		return items, errors.Wrap(err, "[GetTodaysScheduledMonthlyMandatesTxnWithoutUserContext]")
+	}
+	defer rows.Close()
+	return items, nil
 }

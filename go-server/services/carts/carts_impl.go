@@ -8,6 +8,7 @@ import (
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models/entities"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/providers/repositories"
+	"github.com/DeepikaAzad/go-to-do-app/go-server/services"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -70,6 +71,7 @@ func (i CartsImpl) AddItemToCart(req models.AddItemToCartReq, ctx *gin.Context) 
 
 	return cart, nil
 }
+
 func addItem(itemsID string, itemId uint) (string, error) {
 	itemJson := []string{}
 
@@ -97,4 +99,24 @@ func addItem(itemsID string, itemId uint) (string, error) {
 
 	resp, _ := json.Marshal(itemJson)
 	return string(resp), nil
+}
+
+func (i CartsImpl) GetCart(req models.CartListReq, ctx *gin.Context) (models.CartListResp, error) {
+	resp := models.CartListResp{}
+	cart, err := repositories.Carts.GetCartByUserAndPurchasedFalse(req.UserID, ctx)
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return resp, err
+	}
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return resp, err
+	}
+
+	itemNameList, err := services.AddNameInCardItemIds(cart.ItemsID, ctx)
+	if err != nil {
+		return resp, err
+	}
+	resp.CartID = cart.ID
+	resp.Items = itemNameList
+	return resp, nil
 }

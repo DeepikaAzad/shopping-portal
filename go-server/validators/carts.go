@@ -7,6 +7,7 @@ import (
 	"github.com/DeepikaAzad/go-to-do-app/go-server/providers/repositories"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/thedevsaddam/govalidator"
 	"gorm.io/gorm"
 )
 
@@ -15,6 +16,22 @@ func ValidateAddItemToCart(ctx *gin.Context) (models.AddItemToCartReq, models.SZ
 	if err := ctx.ShouldBindJSON(&reqBody); err != nil {
 		return reqBody, GetInvalidDataTypeSzlError(err)
 	}
+
+	rules := govalidator.MapData{
+		"item_name": []string{"required", "between:1,15", "alpha"},
+	}
+
+	opts := govalidator.Options{
+		Data:  &reqBody, // request object
+		Rules: rules,    // rules map
+	}
+	v := govalidator.New(opts)
+	e := v.ValidateStruct()
+	if len(e) > 0 {
+		err := GetValidationError(e)
+		return reqBody, err
+	}
+
 	item, err := repositories.Items.GetItemByName(reqBody.ItemName, ctx)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return reqBody, GetInternalServerError(err)

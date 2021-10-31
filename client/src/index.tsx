@@ -4,6 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import axios from 'axios';
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL || "";
+
+axios.interceptors.request.use(
+    config => {
+        const { origin } = new URL(config.url || "");
+        const allowedOrigins = [backendUrl];
+        const token = localStorage.getItem('token');
+        if (allowedOrigins.includes(origin)) {
+            if (config.headers) {
+                config.headers.authorization = `Bearer${token}`;
+            }
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

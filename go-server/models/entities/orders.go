@@ -11,3 +11,8 @@ type Orders struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type ItemOrder struct {
+	CartID  uint   `json:"cart_id"`
+	ItemsID string `json:"items_id"`
+}

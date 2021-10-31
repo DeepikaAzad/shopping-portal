@@ -2,6 +2,7 @@ package validators
 
 import (
 	"errors"
+	"net/url"
 
 	"github.com/DeepikaAzad/go-to-do-app/go-server/constants"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models"
@@ -49,10 +50,10 @@ func GetNotFoundError(err error) models.SZLError {
 	}
 }
 
-func GetInvalidPwdError(err error) models.SZLError {
+func GetInvalidUserError(err error) models.SZLError {
 	return models.SZLError{
 		Message: err.Error(),
-		Type:    constants.ErrorCode.INVALID_PASSWORD,
+		Type:    constants.ErrorCode.INVALID_USER,
 		Errors:  err,
 	}
 }
@@ -63,4 +64,18 @@ func GetInvalidTokenError(err error) models.SZLError {
 		Type:    constants.ErrorCode.INVALID_TOKEN,
 		Errors:  err,
 	}
+}
+
+func GetValidationError(e url.Values) models.SZLError {
+	slErr := models.SZLError{}
+	for param, message := range e {
+		slErr = models.SZLError{
+			Param:   param,
+			Message: message[0],
+			Errors:  errors.New(message[0]),
+			Type:    constants.ErrorCode.INVALID_REQUEST_ERROR,
+		}
+		break
+	}
+	return slErr
 }

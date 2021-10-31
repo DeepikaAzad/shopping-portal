@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"log"
+	"net/http/httptest"
 	"strconv"
 	"time"
 
@@ -61,4 +62,12 @@ func registerMiddlewares() {
 	allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
 	corsConfig.AddAllowHeaders(allowedHeaders)
 	router.Use(cors.New(corsConfig))
+}
+
+func Bootstrap() *gin.Context {
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	config.LoadConfigs()
+	db, _ := database.Connection()
+	ctx.Set("DB", db)
+	return ctx
 }

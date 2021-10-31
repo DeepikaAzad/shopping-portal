@@ -19,3 +19,7 @@ func GetPlaceOrderResponse(cart entities.Carts) models.PlaceOrderResp {
 		Message: "item orderd sucessfully",
 	}
 }
+
+func GetCartResponse(cart models.CartListResp) models.CartListResp {
+	return cart
+}

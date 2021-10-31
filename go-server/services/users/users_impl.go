@@ -48,3 +48,11 @@ func (u UsersImpl) LoginUser(user models.LoginUserReq, ctx *gin.Context) (entiti
 	}
 	return updatedUser, nil
 }
+
+func (i UsersImpl) GetUserList(ctx *gin.Context) ([]entities.Users, error) {
+	resp, err := repositories.Users.GetUserList(ctx)
+	if err != nil {
+		return resp, err
+	}
+	return resp, nil
+}

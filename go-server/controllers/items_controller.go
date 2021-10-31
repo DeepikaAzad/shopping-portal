@@ -22,3 +22,12 @@ func AddItemHandler(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, transformers.GetAddItemResponse(resp))
 }
+
+func GetItemListHandler(ctx *gin.Context) {
+	resp, err := providers.Items.ItemList(ctx)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+	ctx.JSON(http.StatusOK, transformers.GetItemListResponse(resp))
+}

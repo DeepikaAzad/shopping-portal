@@ -19,3 +19,11 @@ func (i ItemsImpl) AddItem(req models.AddItemReq, ctx *gin.Context) (entities.It
 	}
 	return resp, nil
 }
+
+func (i ItemsImpl) ItemList(ctx *gin.Context) ([]entities.Items, error) {
+	resp, err := repositories.Items.GetItemList(ctx)
+	if err != nil {
+		return resp, err
+	}
+	return resp, nil
+}

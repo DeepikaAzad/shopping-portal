@@ -27,7 +27,6 @@ func RegisterUserHandler(ctx *gin.Context) {
 func LoginHandler(ctx *gin.Context) {
 	reqBody, szerr := validators.ValidateLoginUser(ctx)
 	if szerr.Errors != nil {
-		// ctx.JSON(http.StatusUnprocessableEntity, transformers.ErrorResponse(err.Error()))
 		ctx.Error(&szerr)
 		return
 	}
@@ -37,4 +36,13 @@ func LoginHandler(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, transformers.GetLoginUserResponse(resp.Token))
+}
+
+func GetUserListHandler(ctx *gin.Context) {
+	resp, err := providers.Users.GetUserList(ctx)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+	ctx.JSON(http.StatusOK, transformers.GetUserListResponse(resp))
 }

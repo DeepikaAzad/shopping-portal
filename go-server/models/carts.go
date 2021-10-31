@@ -1,22 +1,31 @@
 package models
 
 type AddItemToCartReq struct {
-	ItemID   uint   `json:"item_id,omitempty"`
-	ItemName string `json:"item_name,omitempty"`
+	ItemID   uint   `json:"item_id"`
+	ItemName string `json:"item_name"`
 }
 
 type AddItemToCartResp struct {
-	CartID  uint   `json:"cart_id,omitempty"`
-	ItemsID string `json:"items_id,omitempty"`
-	Message string `json:"message,omitempty"`
+	CartID  uint   `json:"cart_id"`
+	ItemsID string `json:"items_id"`
+	Message string `json:"message"`
 }
 
 type PlaceOrderReq struct {
-	CartID uint `json:"cart_id,omitempty"`
-	UserID uint `json:"user_id,omitempty"`
+	CartID uint `json:"cart_id"`
+	UserID uint `json:"user_id"`
 }
 
 type PlaceOrderResp struct {
-	CartID  uint   `json:"cart_id,omitempty"`
-	Message string `json:"message,omitempty"`
+	CartID  uint   `json:"cart_id"`
+	Message string `json:"message"`
+}
+
+type CartListReq struct {
+	UserID uint `json:"user_id"`
+}
+
+type CartListResp struct {
+	CartID uint   `json:"cart_id"`
+	Items  []Item `json:"item_list"`
 }

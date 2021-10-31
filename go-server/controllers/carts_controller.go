@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/DeepikaAzad/go-to-do-app/go-server/constants"
+	"github.com/DeepikaAzad/go-to-do-app/go-server/models"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/providers"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/transformers"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/validators"
@@ -39,4 +40,15 @@ func PlaceOrderHandler(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, transformers.GetPlaceOrderResponse(resp))
+}
+
+func GetCartHandler(ctx *gin.Context) {
+	reqBody := models.CartListReq{}
+	reqBody.UserID = ctx.GetUint("user_id")
+	resp, err := providers.Carts.GetCart(reqBody, ctx)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+	ctx.JSON(http.StatusOK, transformers.GetCartResponse(resp))
 }
