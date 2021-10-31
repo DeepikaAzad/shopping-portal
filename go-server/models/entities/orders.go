@@ -13,6 +13,7 @@ type Orders struct {
 }
 
 type ItemOrder struct {
-	CartID  uint   `json:"cart_id"`
-	ItemsID string `json:"items_id"`
+	CartID    uint      `json:"cart_id"`
+	CreatedAt time.Time `json:"created_at"`
+	ItemsID   string    `json:"items_id"`
 }

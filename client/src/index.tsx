@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import './index.css';
 
 import axios from 'axios';
 
@@ -24,6 +25,14 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+axios.interceptors.response.use(undefined, (error) => {
+    if (error.response && error.response.status === 401) {
+        localStorage.clear();
+        return window.location.href = '/login';
+    }
+    return Promise.reject(error);
+});
 
 ReactDOM.render(
   <React.StrictMode>

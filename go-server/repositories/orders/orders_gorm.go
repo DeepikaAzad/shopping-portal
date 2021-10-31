@@ -26,7 +26,7 @@ func (r OrdersGorm) OrderList(usersId uint, ctx *gin.Context) ([]entities.ItemOr
 	rows, err := db.
 		Joins("left join carts on carts.id = orders.carts_id").
 		Where("orders.users_id = ? and carts.is_purchased = ?", usersId, 1).
-		Select("orders.carts_id", "carts.items_id").
+		Select("orders.carts_id", "carts.items_id", "orders.created_at").
 		Find(&orders).Rows()
 
 	if err != nil {
@@ -35,7 +35,7 @@ func (r OrdersGorm) OrderList(usersId uint, ctx *gin.Context) ([]entities.ItemOr
 
 	for rows.Next() {
 		order := entities.ItemOrder{}
-		if err := rows.Scan(&order.CartID, &order.ItemsID); err != nil {
+		if err := rows.Scan(&order.CartID, &order.ItemsID, &order.CreatedAt); err != nil {
 			return itemOrders, err
 		}
 		itemOrders = append(itemOrders, order)

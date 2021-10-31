@@ -3,10 +3,12 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import './App.css';
 import Login from "./pages/Login";
-import Nav from "./components/Nav";
-import Home from "./pages/Home";
+import Navigation from "./components/Nav";
 import Register from "./pages/Register";
 import CreateItem from "./pages/CreateItem";
+import ItemList from "./pages/ItemList";
+import ViewCart from "./pages/ViewCart";
+import OrderList from "./pages/OrderList";
 
 import { parseJwt } from "./util"
 
@@ -29,10 +31,12 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <Nav name={name} setName={setName} />
+                <Navigation name={name} setName={setName} />
 
                 <main className="form-signin">
-                    <Route path="/" exact component={() => <Home name={name} />} />
+                    <Route path="/" exact component={() => <ItemList name={name} />} />
+                    <Route path="/view-cart" exact component={ViewCart} />
+                    <Route path="/order-list" exact component={OrderList} />
                 </main>
                 <main className="form-signin">
                     <Route path="/login" component={() => <Login setName={setName} />} />

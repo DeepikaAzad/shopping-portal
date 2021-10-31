@@ -10,6 +10,7 @@ type OrderListResp struct {
 
 type Order struct {
 	CartID    uint       `json:"cart_id"`
+	CreatedAt string     `json:"created_at"`
 	ItemNames []ItemName `json:"items"`
 }
 

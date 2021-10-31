@@ -20,7 +20,10 @@ func AddItemToCartHandler(ctx *gin.Context) {
 	resp, err := providers.Carts.AddItemToCart(reqBody, ctx)
 	if err != nil {
 		if err.Error() == constants.ErrorCode.DUPLICATE_ERROR {
-			ctx.JSON(http.StatusUnprocessableEntity, "item already added")
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{
+				"message": "item already exist",
+			})
+			return
 		}
 		ctx.Error(err)
 		return

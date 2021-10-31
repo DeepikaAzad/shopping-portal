@@ -5,16 +5,16 @@ import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddToCart = (props: any) => {
+const RemoveFromCart = (props: any) => {
   const cellValue = props.valueFormatted ? props.valueFormatted : props.value;
   const [submitting, setSubmitting] = useState(false);
 
   const buttonClicked = () => {
     setSubmitting(true);
-    axios.post(process.env.REACT_APP_BACKEND_URL + '/api/cart/add', {
+    axios.post(process.env.REACT_APP_BACKEND_URL + '/api/cart/remove', {
       item_id: cellValue
     }).then((_) => {
-      toast.success('Item added to cart.', {
+      toast.success('Removed Successfully', {
         position: "bottom-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -24,9 +24,10 @@ const AddToCart = (props: any) => {
         progress: undefined,
       });
       setSubmitting(false);
+      window.location.reload();
     }).catch((error) => {
       setSubmitting(false);
-      toast.error('Add to cart failed: ' + error.response.data.message || "", {
+      toast.error('Remove from cart failed: ' + error.message || "", {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -43,10 +44,10 @@ const AddToCart = (props: any) => {
       <span>{cellValue}</span>&nbsp;
       <button className="btn btn-secondary btn-sm" onClick={() => buttonClicked()}>
         {submitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-        Add to Cart
+        Remove from Cart
       </button>
     </span>
   );
 };
 
-export default AddToCart;
+export default RemoveFromCart;

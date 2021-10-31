@@ -32,9 +32,8 @@ const CreateItem = () => {
                 setRedirect(true);
             }, 850)
         }).catch((error) => {
-            console.log(error);
             setSubmitting(false);
-            toast.error('Item creation failed', {
+            toast.error('Create item failed: ' + error.response.data.message || "", {
                 position: "bottom-right",
                 autoClose: 3000,
                 hideProgressBar: false,

@@ -19,7 +19,6 @@ func GetRemoveItemFromCartResponse() models.RemoveItemfromCartResp {
 
 func GetPlaceOrderResponse(cart entities.Carts) models.PlaceOrderResp {
 	return models.PlaceOrderResp{
-		CartID:  cart.ID,
 		Message: "item orderd sucessfully",
 	}
 }

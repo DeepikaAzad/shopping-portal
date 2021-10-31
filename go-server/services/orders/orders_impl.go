@@ -3,6 +3,7 @@ package orders
 import (
 	"encoding/json"
 
+	"github.com/DeepikaAzad/go-to-do-app/go-server/constants"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/providers/repositories"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/utils"
@@ -31,6 +32,7 @@ func (i OrdersImpl) OrderList(req models.OrderListReq, ctx *gin.Context) ([]mode
 		}
 		order := models.Order{
 			CartID:    v.CartID,
+			CreatedAt: v.CreatedAt.Format(constants.DateTimeLayout.DD_MM_YYYY_HH_MM_SS),
 			ItemNames: resp,
 		}
 		orderList = append(orderList, order)

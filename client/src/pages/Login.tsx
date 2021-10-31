@@ -40,7 +40,6 @@ const Login = (props: { setName: (name: string) => void }) => {
             }, 1250)
         }).catch((error) => {
             setSubmitting(false);
-            console.log("ckadjs");
             toast.error('Invalid username/password!', {
                 position: "bottom-right",
                 autoClose: 3000,
