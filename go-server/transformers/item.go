@@ -7,6 +7,6 @@ import (
 
 func GetAddItemResponse(item entities.Items) models.AddItemResp {
 	return models.AddItemResp{
-		Message: item.Name + " item added suucessfully",
+		Message: item.Name + " item added sucessfully",
 	}
 }

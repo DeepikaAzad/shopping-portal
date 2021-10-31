@@ -1,13 +1,13 @@
 package entities
 
-import (
-	"gorm.io/gorm"
-)
+import "time"
 
 type Orders struct {
-	gorm.Model
-	Carts   Carts
-	CartsID uint `gorm:"cart_id;foreignkey:carts_id;"`
-	Users   Users
-	UsersID uint `gorm:"user_id;foreignkey:users_id;"`
+	ID        uint `gorm:"column:id;primaryKey;autoIncrement"`
+	Carts     Carts
+	CartsID   uint `gorm:"column:carts_id;foreignkey:cart_id;"`
+	Users     Users
+	UsersID   uint `gorm:"column:users_id;foreignkey:user_id;"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

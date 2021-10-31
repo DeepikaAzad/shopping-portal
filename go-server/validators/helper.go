@@ -25,10 +25,18 @@ func GetInternalServerError(err error) models.SZLError {
 	}
 }
 
+func GetInvalidRequestError(err error) models.SZLError {
+	return models.SZLError{
+		Type:    constants.ErrorCode.INTERNAL_SERVER_ERROR,
+		Message: err.Error(),
+		Errors:  err,
+	}
+}
+
 func GetDuplicateError(err error) models.SZLError {
 	return models.SZLError{
 		Message: err.Error(),
-		Type:    constants.ErrorCode.INTERNAL_SERVER_ERROR,
+		Type:    constants.ErrorCode.DUPLICATE_ERROR,
 		Errors:  err,
 	}
 }

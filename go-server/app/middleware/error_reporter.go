@@ -37,6 +37,8 @@ func jsonAppErrorReporterT(errType gin.ErrorType) gin.HandlerFunc {
 				parsedError := errors.Cause(err).(*models.SZLError)
 				parsedErrorFormatted.Type = parsedError.Type
 				parsedErrorFormatted.Message = parsedError.Message
+			default:
+				parsedErrorFormatted.Message = err.Error()
 			}
 
 			setFormattedErrorInJson(parsedErrorFormatted, c)

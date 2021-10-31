@@ -26,11 +26,7 @@ func (r UsersGorm) CreateUser(user entities.Users, ctx *gin.Context) (entities.U
 }
 
 func (r UsersGorm) UpdateUser(user entities.Users, userName string, ctx *gin.Context) (entities.Users, error) {
-	dbx, f := ctx.Get("DB")
-	if !f {
-		// Handle error
-		fmt.Println(f)
-	}
+	dbx, _ := ctx.Get("DB")
 	db := dbx.(*gorm.DB)
 	err := db.Model(&entities.Users{}).Where("user_name", userName).Updates(user).Error
 	if err != nil {

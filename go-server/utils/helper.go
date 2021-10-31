@@ -1,6 +1,9 @@
 package utils
 
-import "encoding/base64"
+import (
+	"encoding/base64"
+	"strconv"
+)
 
 func DecodeBase64(in string) string {
 	out := make([]byte, base64.StdEncoding.DecodedLen(len(in)))
@@ -9,4 +12,9 @@ func DecodeBase64(in string) string {
 		return ""
 	}
 	return string(out[0:n])
+}
+
+func ParseUint(str string) uint {
+	intval, _ := strconv.ParseUint(str, 10, 64)
+	return uint(intval)
 }

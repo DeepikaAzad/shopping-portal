@@ -7,7 +7,7 @@ import (
 
 func GetRegisterUserResponse(user entities.Users) models.RegisterUserResp {
 	return models.RegisterUserResp{
-		Message: user.Name + " registered suucessfully.",
+		Message: user.Name + " registered sucessfully.",
 	}
 }
 

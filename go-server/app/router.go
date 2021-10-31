@@ -20,5 +20,7 @@ func Router() {
 
 	api.Use(middleware.AuthorizeJWT())
 	api.POST("/item/create", controllers.AddItemHandler)
+	api.POST("/cart/add", controllers.AddItemToCartHandler)
+	api.GET("/cart/:cartId/complete", controllers.PlaceOrderHandler)
 
 }

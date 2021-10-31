@@ -80,6 +80,9 @@ func (service *JWTImpl) ValidateToken(encodedToken string, ctx *gin.Context) (*j
 			if user.Token != encodedToken {
 				return nil, errors.New("invalid token")
 			}
+
+			ctx.Set("user_id", user.ID)
+			ctx.Set("user_namde", user.UserName)
 			continue
 		}
 	}

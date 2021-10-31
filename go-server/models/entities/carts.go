@@ -1,12 +1,12 @@
 package entities
 
-import (
-	"gorm.io/gorm"
-)
+import "time"
 
 type Carts struct {
-	gorm.Model
-	Name        string `gorm:"column:name;type:varchar(50)"`
+	ID          uint   `gorm:"column:id;primaryKey;autoIncrement"`
 	UsersID     uint   `gorm:"column:users_id;foreignkey:users_id"`
-	IsPurchased bool   `gorm:"column:is_purchased"`
+	ItemsID     string `gorm:"column:items_id"`
+	IsPurchased int8   `gorm:"column:is_purchased;"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
