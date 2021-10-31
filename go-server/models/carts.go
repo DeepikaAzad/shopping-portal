@@ -5,7 +5,15 @@ type AddItemToCartReq struct {
 	ItemName string `json:"item_name"`
 }
 
+type RemoveItemfromCartReq struct {
+	ItemID uint `json:"item_id"`
+}
+
 type AddItemToCartResp struct {
+	Message string `json:"message"`
+}
+
+type RemoveItemfromCartResp struct {
 	Message string `json:"message"`
 }
 

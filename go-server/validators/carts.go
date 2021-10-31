@@ -18,7 +18,7 @@ func ValidateAddItemToCart(ctx *gin.Context) (models.AddItemToCartReq, models.SZ
 	}
 
 	rules := govalidator.MapData{
-		"item_name": []string{"between:1,15", "alpha"},
+		"item_name": []string{"between:1,15", "alpha_space"},
 		"item_id":   []string{"required", "numeric"},
 	}
 
@@ -58,5 +58,37 @@ func ValidatePlaceOrderHandler(ctx *gin.Context) (models.PlaceOrderReq, models.S
 	if cart.IsPurchased == 1 {
 		return reqBody, GetNotFoundError(errors.New("cart is empty"))
 	}
+	return reqBody, models.SZLError{}
+}
+
+func ValidateRemoveItemFromCart(ctx *gin.Context) (models.RemoveItemfromCartReq, models.SZLError) {
+	var reqBody models.RemoveItemfromCartReq
+	if err := ctx.ShouldBindJSON(&reqBody); err != nil {
+		return reqBody, GetInvalidDataTypeSzlError(err)
+	}
+
+	rules := govalidator.MapData{
+		"item_id": []string{"required", "numeric"},
+	}
+
+	opts := govalidator.Options{
+		Data:  &reqBody, // request object
+		Rules: rules,    // rules map
+	}
+	v := govalidator.New(opts)
+	e := v.ValidateStruct()
+	if len(e) > 0 {
+		err := GetValidationError(e)
+		return reqBody, err
+	}
+
+	item, err := repositories.Items.GetItemByID(reqBody.ItemID, ctx)
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return reqBody, GetInternalServerError(err)
+	}
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return reqBody, GetNotFoundError(errors.New("item not found"))
+	}
+	reqBody.ItemID = uint(item.ID)
 	return reqBody, models.SZLError{}
 }

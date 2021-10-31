@@ -23,6 +23,7 @@ func Router() {
 	api.POST("/item/create", controllers.AddItemHandler)
 	api.GET("/item/list", controllers.GetItemListHandler)
 	api.POST("/cart/add", controllers.AddItemToCartHandler)
+	api.POST("/cart/remove", controllers.RemoveItemFromCartHandler)
 	api.POST("/cart/:cartId/complete", controllers.PlaceOrderHandler)
 	api.GET("/cart/list", controllers.GetCartHandler)
 	api.GET("/order/list", controllers.OrderListHandler)

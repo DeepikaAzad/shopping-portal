@@ -18,7 +18,7 @@ func ValidateRegisterUser(ctx *gin.Context) (models.RegisterUserReq, models.SZLE
 	}
 
 	rules := govalidator.MapData{
-		"user_name": []string{"required", "between:3,15"},
+		"user_name": []string{"required", "between:3,50"},
 		"full_name": []string{"required"},
 		"password":  []string{"required"},
 	}
@@ -50,7 +50,7 @@ func ValidateLoginUser(ctx *gin.Context) (reqBody models.LoginUserReq, szErr mod
 		return reqBody, GetInvalidDataTypeSzlError(err)
 	}
 	rules := govalidator.MapData{
-		"user_name": []string{"required"},
+		"user_name": []string{"required", "between:3,50"},
 		"password":  []string{"required"},
 	}
 	opts := govalidator.Options{

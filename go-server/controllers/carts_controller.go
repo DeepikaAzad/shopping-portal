@@ -20,7 +20,7 @@ func AddItemToCartHandler(ctx *gin.Context) {
 	resp, err := providers.Carts.AddItemToCart(reqBody, ctx)
 	if err != nil {
 		if err.Error() == constants.ErrorCode.DUPLICATE_ERROR {
-			ctx.JSON(http.StatusUnprocessableEntity, err.Error())
+			ctx.JSON(http.StatusUnprocessableEntity, "item already added")
 		}
 		ctx.Error(err)
 		return
@@ -51,4 +51,18 @@ func GetCartHandler(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, transformers.GetCartResponse(resp))
+}
+
+func RemoveItemFromCartHandler(ctx *gin.Context) {
+	reqBody, slErr := validators.ValidateRemoveItemFromCart(ctx)
+	if slErr.Errors != nil {
+		ctx.Error(&slErr)
+		return
+	}
+	err := providers.Carts.RemoveItemFromCart(reqBody, ctx)
+	if err != nil {
+		ctx.Error(err)
+		return
+	}
+	ctx.JSON(http.StatusOK, transformers.GetRemoveItemFromCartResponse())
 }

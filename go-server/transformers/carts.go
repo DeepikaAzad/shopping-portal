@@ -11,6 +11,12 @@ func GetAddItemToCartResponse(cart entities.Carts) models.AddItemToCartResp {
 	}
 }
 
+func GetRemoveItemFromCartResponse() models.RemoveItemfromCartResp {
+	return models.RemoveItemfromCartResp{
+		Message: "item removed sucessfully from your cart",
+	}
+}
+
 func GetPlaceOrderResponse(cart entities.Carts) models.PlaceOrderResp {
 	return models.PlaceOrderResp{
 		CartID:  cart.ID,
@@ -19,5 +25,8 @@ func GetPlaceOrderResponse(cart entities.Carts) models.PlaceOrderResp {
 }
 
 func GetCartResponse(cart models.CartListResp) models.CartListResp {
+	if cart.CartID == 0 {
+		cart.Items = []models.Item{}
+	}
 	return cart
 }

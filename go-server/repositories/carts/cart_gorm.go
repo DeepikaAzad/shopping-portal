@@ -29,14 +29,24 @@ func (r CartsGorm) GetCartByUserAndPurchasedFalse(userId uint, ctx *gin.Context)
 	return cart, nil
 }
 
-func (r CartsGorm) UpdateCart(cart entities.Carts, cartId uint, ctx *gin.Context) (entities.Carts, error) {
+func (r CartsGorm) UpdateCartItemIDs(cart entities.Carts, cartId uint, ctx *gin.Context) (entities.Carts, error) {
 	dbx, _ := ctx.Get("DB")
 	db := dbx.(*gorm.DB)
-	err := db.Model(&cart).Where("id", cart.ID).Updates(cart).Error
+	err := db.Model(&cart).Where("id", cart.ID).Update("items_id", cart.ItemsID).Error
 	if err != nil {
 		return cart, err
 	}
 	return cart, nil
+}
+
+func (r CartsGorm) DeleteCart(cart entities.Carts, ctx *gin.Context) error {
+	dbx, _ := ctx.Get("DB")
+	db := dbx.(*gorm.DB)
+	err := db.Delete(&cart).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r CartsGorm) UpdateCartIsPurchased(isPurchansed int8, cartId uint, ctx *gin.Context) (entities.Carts, error) {

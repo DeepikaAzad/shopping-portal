@@ -17,7 +17,7 @@ func ValidateAddItem(ctx *gin.Context) (models.AddItemReq, models.SZLError) {
 	}
 
 	rules := govalidator.MapData{
-		"name": []string{"required", "between:1,15", "alpha"},
+		"name": []string{"required", "between:1,15", "alpha_space"},
 	}
 
 	opts := govalidator.Options{

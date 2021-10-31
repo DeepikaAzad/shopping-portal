@@ -10,4 +10,5 @@ type CartsInterface interface {
 	AddItemToCart(models.AddItemToCartReq, *gin.Context) (entities.Carts, error)
 	PlaceOrder(models.PlaceOrderReq, *gin.Context) (entities.Carts, error)
 	GetCart(models.CartListReq, *gin.Context) (models.CartListResp, error)
+	RemoveItemFromCart(models.RemoveItemfromCartReq, *gin.Context) error
 }
