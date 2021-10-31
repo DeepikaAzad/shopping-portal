@@ -1,0 +1,26 @@
+package middleware
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/DeepikaAzad/go-to-do-app/go-server/services/jwt"
+	jwtPkg "github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+)
+
+func AuthorizeJWT() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		const BEARER_SCHEMA = "Bearer"
+		authHeader := c.GetHeader("Authorization")
+		tokenString := authHeader[len(BEARER_SCHEMA):]
+		token, err := jwt.JWTAuthService().ValidateToken(tokenString)
+		if token.Valid {
+			claims := token.Claims.(jwtPkg.MapClaims)
+			fmt.Println(claims)
+		} else {
+			fmt.Println(err)
+			c.AbortWithStatus(http.StatusUnauthorized)
+		}
+	}
+}
