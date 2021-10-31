@@ -29,3 +29,14 @@ func (r ItemsGorm) GetItemList(ctx *gin.Context) ([]entities.Items, error) {
 	defer rows.Close()
 	return items, nil
 }
+
+func (r ItemsGorm) GetItemByName(name string, ctx *gin.Context) (entities.Items, error) {
+	dbx, _ := ctx.Get("DB")
+	db := dbx.(*gorm.DB)
+	var item entities.Items
+	err := db.Where("name", name).Take(&item).Error
+	if err != nil {
+		return item, err
+	}
+	return item, nil
+}

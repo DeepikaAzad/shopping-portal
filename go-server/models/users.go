@@ -6,6 +6,10 @@ type RegisterUserReq struct {
 	Password string `json:"password,omitempty"`
 }
 
+type RegisterUserResp struct {
+	Message string `json:"message,omitempty"`
+}
+
 type LoginUserReq struct {
 	UserName string `json:"user_name,omitempty"`
 	Password string `json:"password,omitempty"`

@@ -1,7 +1,7 @@
 package users
 
 import (
-	"errors"
+	"fmt"
 
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models/entities"
@@ -22,6 +22,7 @@ func (u UsersImpl) RegisterUser(user models.RegisterUserReq, ctx *gin.Context) (
 	}
 	// Hash password
 	password, err := utils.HashPassword(user.Password)
+	fmt.Println(password)
 	if err != nil {
 		return userObj, err
 	}
@@ -34,24 +35,10 @@ func (u UsersImpl) RegisterUser(user models.RegisterUserReq, ctx *gin.Context) (
 }
 
 func (u UsersImpl) LoginUser(user models.LoginUserReq, ctx *gin.Context) (entities.Users, error) {
-	user.Password = utils.DecodeBase64(user.Password)
 	userObj := entities.Users{
 		UserName: user.UserName,
-		Password: user.Password, // @TODO:: encrypt
 	}
-	// Match cred
-	registeredUser, err := repositories.Users.GetUserByUserName(userObj.UserName, ctx)
-	if err != nil {
-		return userObj, err
-	}
-	token := ""
-
-	// match Password
-	if utils.CheckPasswordHash(user.Password, registeredUser.Password) {
-		token = jwt.JWTAuthService().GenerateToken(user.UserName, true)
-	} else {
-		return userObj, errors.New("Invalid password.")
-	}
+	token := jwt.JWTAuthService().GenerateToken(user.UserName, true)
 
 	// update token
 	userObj.Token = token

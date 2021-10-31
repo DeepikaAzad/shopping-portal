@@ -1,11 +1,15 @@
 package jwt
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"time"
 
+	"github.com/DeepikaAzad/go-to-do-app/go-server/providers/repositories"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type authCustomClaims struct {
@@ -56,7 +60,30 @@ func (service *JWTImpl) GenerateToken(name string, isUser bool) string {
 	return t
 }
 
-func (service *JWTImpl) ValidateToken(encodedToken string) (*jwt.Token, error) {
+func (service *JWTImpl) ValidateToken(encodedToken string, ctx *gin.Context) (*jwt.Token, error) {
+	claims := jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(encodedToken, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(getSecretKey()), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	for key, val := range claims {
+		if key == "name" {
+			fmt.Println(fmt.Sprint(val))
+			user, err := repositories.Users.GetUserByUserName(fmt.Sprint(val), ctx)
+			if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+				return nil, err
+			}
+
+			if user.Token != encodedToken {
+				return nil, errors.New("invalid token")
+			}
+			continue
+		}
+	}
+
 	return jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
 		if _, isvalid := token.Method.(*jwt.SigningMethodHMAC); !isvalid {
 			return nil, fmt.Errorf("Invalid token", token.Header["alg"])

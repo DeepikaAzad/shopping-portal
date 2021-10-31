@@ -18,7 +18,7 @@ func Router() {
 	user.POST("/create", controllers.RegisterUserHandler)
 	user.POST("/login", controllers.LoginHandler)
 
-	item := api.Group("/item")
-	item.Use(middleware.AuthorizeJWT())
-	item.POST("/create", controllers.AddItemHandler)
+	api.Use(middleware.AuthorizeJWT())
+	api.POST("/item/create", controllers.AddItemHandler)
+
 }

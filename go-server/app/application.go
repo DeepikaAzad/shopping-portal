@@ -13,6 +13,7 @@ import (
 	"github.com/spf13/cobra"
 	"gorm.io/gorm"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	ginglog "github.com/szuecs/gin-glog"
 )
@@ -47,5 +48,17 @@ func initDB() {
 }
 
 func registerMiddlewares() {
+	router.Use(middleware.AppErrorReporter())
 	router.Use(middleware.DatabaseContext(DB))
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://127.0.0.1:3000", "http://localhost:3000"}
+	// To be able to send tokens to the server.
+	corsConfig.AllowCredentials = true
+	// OPTIONS method for ReactJS
+	corsConfig.AddAllowMethods("*")
+
+	allowedHeaders := "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization,X-CSRF-Token"
+	corsConfig.AddAllowHeaders(allowedHeaders)
+	router.Use(cors.New(corsConfig))
 }

@@ -8,4 +8,5 @@ import (
 type ItemGormInterface interface {
 	CreateItem(entities.Items, *gin.Context) (entities.Items, error)
 	GetItemList(*gin.Context) ([]entities.Items, error)
+	GetItemByName(string, *gin.Context) (entities.Items, error)
 }
