@@ -6,8 +6,6 @@ type AddItemToCartReq struct {
 }
 
 type AddItemToCartResp struct {
-	CartID  uint   `json:"cart_id"`
-	ItemsID string `json:"items_id"`
 	Message string `json:"message"`
 }
 

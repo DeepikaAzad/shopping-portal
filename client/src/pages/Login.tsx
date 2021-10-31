@@ -14,8 +14,8 @@ const Login = (props: { setName: (name: string) => void }) => {
     const [redirect, setRedirect] = useState(false);
 
     const submit = async (e: SyntheticEvent) => {
-        setSubmitting(true);
         e.preventDefault();
+        setSubmitting(true);
 
         axios.post(process.env.REACT_APP_BACKEND_URL + '/api/user/login', {
             user_name: username,
@@ -50,7 +50,7 @@ const Login = (props: { setName: (name: string) => void }) => {
                 draggable: true,
                 progress: undefined,
             });
-        })
+        });
     }
 
     if (redirect) {

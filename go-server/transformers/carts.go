@@ -7,8 +7,6 @@ import (
 
 func GetAddItemToCartResponse(cart entities.Carts) models.AddItemToCartResp {
 	return models.AddItemToCartResp{
-		CartID:  cart.ID,
-		ItemsID: cart.ItemsID,
 		Message: "item added sucessfully to your cart",
 	}
 }

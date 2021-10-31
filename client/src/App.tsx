@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { BrowserRouter, Route } from "react-router-dom";
 
 import './App.css';
@@ -34,6 +33,8 @@ function App() {
 
                 <main className="form-signin">
                     <Route path="/" exact component={() => <Home name={name} />} />
+                </main>
+                <main className="form-signin">
                     <Route path="/login" component={() => <Login setName={setName} />} />
                     <Route path="/register" component={Register} />
                     <Route path="/create-item" component={CreateItem} />

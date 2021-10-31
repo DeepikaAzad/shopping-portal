@@ -1,8 +1,6 @@
 package users
 
 import (
-	"fmt"
-
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/models/entities"
 	"github.com/DeepikaAzad/go-to-do-app/go-server/providers/repositories"
@@ -22,7 +20,6 @@ func (u UsersImpl) RegisterUser(user models.RegisterUserReq, ctx *gin.Context) (
 	}
 	// Hash password
 	password, err := utils.HashPassword(user.Password)
-	fmt.Println(password)
 	if err != nil {
 		return userObj, err
 	}

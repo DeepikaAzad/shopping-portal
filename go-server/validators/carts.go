@@ -18,7 +18,8 @@ func ValidateAddItemToCart(ctx *gin.Context) (models.AddItemToCartReq, models.SZ
 	}
 
 	rules := govalidator.MapData{
-		"item_name": []string{"required", "between:1,15", "alpha"},
+		"item_name": []string{"between:1,15", "alpha"},
+		"item_id":   []string{"required", "numeric"},
 	}
 
 	opts := govalidator.Options{
@@ -32,7 +33,7 @@ func ValidateAddItemToCart(ctx *gin.Context) (models.AddItemToCartReq, models.SZ
 		return reqBody, err
 	}
 
-	item, err := repositories.Items.GetItemByName(reqBody.ItemName, ctx)
+	item, err := repositories.Items.GetItemByID(reqBody.ItemID, ctx)
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return reqBody, GetInternalServerError(err)
 	}

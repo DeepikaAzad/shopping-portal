@@ -42,6 +42,17 @@ func (r ItemsGorm) GetItemByName(name string, ctx *gin.Context) (entities.Items,
 	return item, nil
 }
 
+func (r ItemsGorm) GetItemByID(id uint, ctx *gin.Context) (entities.Items, error) {
+	dbx, _ := ctx.Get("DB")
+	db := dbx.(*gorm.DB)
+	var item entities.Items
+	err := db.Where("id", id).Take(&item).Error
+	if err != nil {
+		return item, err
+	}
+	return item, nil
+}
+
 func (r ItemsGorm) GetItemsByIds(names []uint, ctx *gin.Context) ([]entities.Items, error) {
 	dbx, _ := ctx.Get("DB")
 	db := dbx.(*gorm.DB)

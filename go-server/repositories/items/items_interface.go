@@ -9,5 +9,6 @@ type ItemGormInterface interface {
 	CreateItem(entities.Items, *gin.Context) (entities.Items, error)
 	GetItemList(*gin.Context) ([]entities.Items, error)
 	GetItemByName(string, *gin.Context) (entities.Items, error)
+	GetItemByID(uint, *gin.Context) (entities.Items, error)
 	GetItemsByIds([]uint, *gin.Context) ([]entities.Items, error)
 }
