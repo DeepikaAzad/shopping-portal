@@ -7,7 +7,7 @@ import './index.css';
 
 import axios from 'axios';
 
-const backendUrl = process.env.REACT_APP_BACKEND_URL || "";
+const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
 
 axios.interceptors.request.use(
     config => {
