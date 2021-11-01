@@ -23,7 +23,6 @@ type PlaceOrderReq struct {
 }
 
 type PlaceOrderResp struct {
-	CartID  uint   `json:"cart_id"`
 	Message string `json:"message"`
 }
 
