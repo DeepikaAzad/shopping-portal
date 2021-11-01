@@ -53,7 +53,7 @@ func registerMiddlewares() {
 	router.Use(middleware.DatabaseContext(DB))
 
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://127.0.0.1:3000", "http://localhost:3000"}
+	corsConfig.AllowOrigins = []string{"http://127.0.0.1:3000", "http://localhost:3000", "http://ec2-65-2-71-29.ap-south-1.compute.amazonaws.com", "http://ec2-65-2-71-29.ap-south-1.compute.amazonaws.com:3000", "http://sezzle.backend"}
 	// To be able to send tokens to the server.
 	corsConfig.AllowCredentials = true
 	// OPTIONS method for ReactJS

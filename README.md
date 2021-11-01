@@ -1,101 +1,42 @@
-# :memo: Go To Do App
+# Sezzle Online Shopping portal
 
-This is a to-do list application. The complete tutorial is published on [my blog](https://schadokar.dev/posts/build-a-todo-app-in-golang-mongodb-and-react/).
+## App Domain URI: <http://ec2-65-2-71-29.ap-south-1.compute.amazonaws.com:3000/register>
 
-**Server: Golang  
-Client: React, semantic-ui-react  
-Database: Local MongoDB**
+## GitHub Repository: <https://github.com/DeepikaAzad/shopping-portal>
 
-The offline version of application `Get Shit Done` is hosted at
+System Requirements: Mysql 5.7, go1.16.9 darwin/amd64, node v14.18.1, yarn 1.22.17
 
-:link: https://schadokar.github.io/go-to-do-app/
+To access the API via Postman:
 
-:link: http://getshitdone.surge.sh
+- Register user
+- Login User, Once user is logged-in, copy the `token` from the response and paste it into furthure API's header.
 
-> Offline to-do app instruction. [here](https://codesource.io/building-an-offline-to-do-app-with-react/)
----
 
-# Highlights
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/b48b8cb0a82f30e99df3?action=collection%2Fimport)
 
-1. DB connection string, name and collection name moved to `.env` file as environment variable. Using `github.com/joho/godotenv` to read the environment variables.
-2. [feature/cloud-native-deployment](https://github.com/abdennour/go-to-do-app/tree/feature/cloud-native-deployment) provided by [abdennour](https://github.com/abdennour). Thank you [@abdennour](https://github.com/abdennour) to dockerize it. His features supports both Docker and Kubernetes.
+Features:
 
-## Application Requirement
+1. Have implemented secure jwt login.
+2. User can register.
+3. For each logged-in user, user will be able to add item to cart, place the order, see the cart list, item list and see the order history .
+4. Only authorized user can create item and see the user list.
+5. Cart will create on adding first itme select and cart will remove if user remove all item from cart.
+6. All the APIs are securly oauth protected and data sharing between the Front-End and Back-End is in JSON.
+7. Code is very modular, following the standard pratices with basic documentaion.
 
-### golang server requirement
+Technology:
 
-1. golang https://golang.org/dl/
-2. gorilla/mux package for router `go get -u github.com/gorilla/mux`
-3. mongo-driver package to connect with mongoDB `go get go.mongodb.org/mongo-driver`
-4. github.com/joho/godotenv to access the environment variable.
+- Golang
+- Mysql
+- React
 
-### react client
+Known Issues:
 
-From the Application directory
+- Very Basic UI implemented.
+- To see the User list and add item role based authorization not implemented.
 
-`create-react-app client`
+Please feel free to contact me for any queries.
 
-## :computer: Start the application
-
-1. Make sure your mongoDB is started
-2. Create a `.env` file inside the `go-server` and copy the keys from `.env.example` and update the DB connection string.
-3. From go-server directory, open a terminal and run
-   `go run main.go`
-4. From client directory,  
-   a. install all the dependencies using `npm install`  
-   b. start client `npm start`
-
-## :panda_face: Walk through the application
-
-Open application at http://localhost:3000
-
-### Index page
-
-![](https://github.com/schadokar/go-to-do-app/blob/master/images/index.PNG)
-
-### Create task
-
-Enter a task and Enter
-
-![](https://github.com/schadokar/go-to-do-app/blob/master/images/createTask.PNG)
-
-### Task Complete
-
-On completion of a task, click "done" Icon of the respective task card.
-
-![](https://github.com/schadokar/go-to-do-app/blob/master/images/taskComplete.PNG)
-
-You'll notice on completion of task, card's bottom line color changed from yellow to green.
-
-### Undo a task
-
-To undone a task, click on "undo" Icon,
-
-![](https://github.com/schadokar/go-to-do-app/blob/master/images/createTask.PNG)
-
-You'll notice on completion of task, card's bottom line color changed from green to yellow.
-
-### Delete a task
-
-To delete a task, click on "delete" Icon.
-
-![](https://github.com/schadokar/go-to-do-app/blob/master/images/deletetask.PNG)
-
----
-
-## Author
-
-#### :sun_with_face: Shubham Kumar Chadokar
-
-I am software engineer and love to write articles and tutorials on golang, blockchain, and nodejs.  
-Please checkout my other articles on :link: https://schadokar.dev :tada:
-
-# References
-
-https://godoc.org/go.mongodb.org/mongo-driver/mongo  
-https://www.mongodb.com/blog/post/mongodb-go-driver-tutorial  
-https://vkt.sh/go-mongodb-driver-cookbook/
-
-# License
-
-MIT License
+Deepika Azad
+azaddeepika05@gmail.com
++91 9783839582
