@@ -16,7 +16,6 @@ func LoadConfigs() {
 
 	// Root folder of this project
 	ProjectRootPath := filepath.Join(filepath.Dir(b), "../")
-	log.Println(ProjectRootPath + "/.env")
 	// load .env file
 	err := godotenv.Load(ProjectRootPath + "/.env")
 

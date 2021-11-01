@@ -71,12 +71,8 @@ const ViewCart = () => {
     }
 
     return (
-        <div className="ag-theme-alpine">
-            <div style={{ height: 400, width: 400 }}>
-
-                <div>
-                    {/* Cart List */}
-                </div>
+        <div className="ag-theme-alpine" style={{textAlign: 'center' }}>
+            <div style={{ height: 400, width: 400}}>
                 <AgGridReact
                     frameworkComponents={{
                         removeFromCartRenderer: RemoveFromCart,

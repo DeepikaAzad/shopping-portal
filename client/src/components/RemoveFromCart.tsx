@@ -41,7 +41,6 @@ const RemoveFromCart = (props: any) => {
 
   return (
     <span>
-      <span>{cellValue}</span>&nbsp;
       <button className="btn btn-secondary btn-sm" onClick={() => buttonClicked()}>
         {submitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
         Remove from Cart

@@ -40,14 +40,14 @@ const OrderList = (props: { name: string }) => {
             <AgGridReact
                 onGridReady={onGridReady}
                 rowData={rowData}>
+                <AgGridColumn field="name" valueGetter={orderItemGetter} minWidth={200} />
+                <AgGridColumn field="cart_id" valueGetter={orderCartIdGetter} minWidth={200} headerName="Cart ID" />
                 <AgGridColumn
-                    field="cart_id"
+                    field="created_at"
                     rowGroup={true}
                     hide={true}
-                    valueGetter={orderValueGetter}
                     keyCreator={orderKeyCreator}
-                    headerName="ID"></AgGridColumn>
-                <AgGridColumn field="name"></AgGridColumn>
+                    ></AgGridColumn>
             </AgGridReact>
             <ToastContainer
                 autoClose={5000}
@@ -64,13 +64,11 @@ const OrderList = (props: { name: string }) => {
 
 
     function orderKeyCreator(params: any) {
-        const orderObject = params.value;
-        return orderObject.cart_id;
+        const orderObject = params.data;
+        return orderObject.created_at;
     }
 
-    // https://www.ag-grid.com/react-data-grid/grouping-complex-objects/
-    // Not yet working.
-    function orderValueGetter(params: any) {
+    function orderItemGetter(params: any) {
         const orderObj = params.data;
         if (orderObj == null) {
             return;
@@ -79,10 +77,15 @@ const OrderList = (props: { name: string }) => {
         orderObj.items.forEach((item: any) => {
             itemNames.push(item.name);
         });
-        return {
-            cart_id: orderObj.cart_id,
-            name: itemNames,
-        };
+        return itemNames;
+    }
+
+    function orderCartIdGetter(params: any) {
+        const orderObj = params.data;
+        if (orderObj == null) {
+            return;
+        }
+        return orderObj.cart_id;
     }
 
 };
