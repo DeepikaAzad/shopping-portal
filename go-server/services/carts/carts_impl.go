@@ -131,6 +131,9 @@ func (i CartsImpl) RemoveItemFromCart(req models.RemoveItemfromCartReq, ctx *gin
 	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
 		return err
 	}
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return errors.New(constants.ErrorCode.NOT_FOUND)
+	}
 	itemsId, itemErr := removeItem(cart.ItemsID, req.ItemID)
 	if itemErr != nil {
 		return itemErr

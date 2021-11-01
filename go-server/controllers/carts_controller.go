@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/DeepikaAzad/go-to-do-app/go-server/constants"
@@ -20,9 +21,7 @@ func AddItemToCartHandler(ctx *gin.Context) {
 	resp, err := providers.Carts.AddItemToCart(reqBody, ctx)
 	if err != nil {
 		if err.Error() == constants.ErrorCode.DUPLICATE_ERROR {
-			ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-				"message": "item already exist",
-			})
+			ctx.JSON(http.StatusUnprocessableEntity, validators.GetDuplicateError(errors.New("item already exist")))
 			return
 		}
 		ctx.Error(err)
@@ -64,6 +63,10 @@ func RemoveItemFromCartHandler(ctx *gin.Context) {
 	}
 	err := providers.Carts.RemoveItemFromCart(reqBody, ctx)
 	if err != nil {
+		if err.Error() == constants.ErrorCode.NOT_FOUND {
+			ctx.JSON(http.StatusBadRequest, validators.GetNotFoundError(errors.New("no cart found")))
+			return
+		}
 		ctx.Error(err)
 		return
 	}

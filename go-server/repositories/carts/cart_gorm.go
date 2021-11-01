@@ -42,7 +42,7 @@ func (r CartsGorm) UpdateCartItemIDs(cart entities.Carts, cartId uint, ctx *gin.
 func (r CartsGorm) DeleteCart(cart entities.Carts, ctx *gin.Context) error {
 	dbx, _ := ctx.Get("DB")
 	db := dbx.(*gorm.DB)
-	err := db.Delete(&cart).Error
+	err := db.Where("id", cart.ID).Delete(&cart).Error
 	if err != nil {
 		return err
 	}
