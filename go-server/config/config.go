@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"path/filepath"
 	"runtime"
@@ -17,7 +16,7 @@ func LoadConfigs() {
 
 	// Root folder of this project
 	ProjectRootPath := filepath.Join(filepath.Dir(b), "../")
-	fmt.Println(ProjectRootPath + "/.env")
+	log.Println(ProjectRootPath + "/.env")
 	// load .env file
 	err := godotenv.Load(ProjectRootPath + "/.env")
 
